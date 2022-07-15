@@ -17,7 +17,7 @@ from mmseg import __version__
 from mmseg.apis import init_random_seed, set_random_seed, train_segmentor
 from mmseg.datasets import build_dataset
 from mmseg.models import build_segmentor
-from mmseg.utils import (collect_env, get_device, get_root_logger,
+from mmseg.utils import (collect_env, get_root_logger, get_device,
                          setup_multi_processes)
 
 
@@ -186,6 +186,7 @@ def main():
 
     # set random seeds
     cfg.device = get_device()
+    # cfg.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     seed = init_random_seed(args.seed, device=cfg.device)
     seed = seed + dist.get_rank() if args.diff_seed else seed
     logger.info(f'Set random seed to {seed}, '
