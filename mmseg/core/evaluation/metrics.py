@@ -364,8 +364,11 @@ def total_area_to_metrics(total_area_intersect,
     ret_metrics = OrderedDict({'aAcc': all_acc})
     for metric in metrics:
         if metric == 'mIoU':
+            dice = 2 * total_area_intersect / (
+                total_area_pred_label + total_area_label)
             iou = total_area_intersect / total_area_union
             acc = total_area_intersect / total_area_label
+            ret_metrics['Dice'] = dice
             ret_metrics['IoU'] = iou
             ret_metrics['Acc'] = acc
         elif metric == 'mDice':
